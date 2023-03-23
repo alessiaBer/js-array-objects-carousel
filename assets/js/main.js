@@ -45,7 +45,7 @@ const images = [
 ];
 
 //setto la variabile activeFilm su 0, incrementerà all'eventListener
-let activeFilm = 0;
+let activeGame = 0;
 
 //seleziono il container delle img dalla DOM
 const imgContainer = document.querySelector('.img_container');
@@ -70,11 +70,11 @@ function createCarousel(array, DOMel) {
     array.forEach((element, index) => {
         //creo un markup
         const markup = `
-        <div class="film ${index === activeFilm ? 'active' : ''}">
-            <img src="./assets/${element.image}" alt="film">
+        <div class="game ${index === activeGame ? 'active' : ''}">
+            <img src="./assets/${element.image}" alt="game cover">
             <div class="img_text_container">
-                <h4 class="film_title">${element.title}</h4>
-                <span class="film_caption">${element.text}</span>
+                <h4 class="game_title">${element.title}</h4>
+                <span class="game_caption">${element.text}</span>
             </div>
         </div>
         `
@@ -87,12 +87,12 @@ function createCarousel(array, DOMel) {
 //assegno un eventListener a ciascuno dei due bottoni
 prevBtn.addEventListener('click', function() {
     //al click cambia film prendendo il precedente
-    changeFilm(this);
+    changeGame(this);
 });
 
 nextBtn.addEventListener('click', function() {
     //al click cambia film prendendo il successivo
-    changeFilm(this)
+    changeGame(this)
 })
 
 
@@ -100,27 +100,27 @@ nextBtn.addEventListener('click', function() {
  * Funzione per cambiare il film con i btn
  * @param {Element} button in base al bottone si skippa al film precedente o successivo
  */
-function changeFilm(button) {
-    const allFilms = document.querySelectorAll('.img_container > .film');
-    const currentFilm = allFilms[activeFilm];
+function changeGame(button) {
+    const allGames = document.querySelectorAll('.img_container > .game');
+    const currentGame = allGames[activeGame];
 
-    currentFilm.classList.remove('active');
+    currentGame.classList.remove('active');
 
     if (button.className == 'next') {
-        activeFilm++;
+        activeGame++;
     } else if (button.className == 'prev') {
-        activeFilm--;
+        activeGame--;
     }
     //
 
-    if (activeFilm > images.length - 1) {
-        activeFilm =  0;
-    } else if (activeFilm < 0 ) {
-        activeFilm = images.length - 1;
+    if (activeGame > images.length - 1) {
+        activeGame =  0;
+    } else if (activeGame < 0 ) {
+        activeGame = images.length - 1;
     }
 
-    const changedFilm = allFilms[activeFilm];
+    const changedGame = allGames[activeGame];
 
-    changedFilm.classList.add('active');
+    changedGame.classList.add('active');
 }
 

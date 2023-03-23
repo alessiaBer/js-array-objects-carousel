@@ -31,7 +31,7 @@ img {
     height: 550px;
 }
 
-.film:not(.active) {
+.game:not(.active) {
     display: none;
 }
 
@@ -44,12 +44,12 @@ img {
     padding: 0 0.5rem;
 }
 
-.film_title {
+.game_title {
     font-size: 2rem;
     padding-bottom: 1.5rem;
 }
 
-.film_caption {
+.game_caption {
     display: block;
     font-size: 1rem;
     padding-bottom: 1rem;
