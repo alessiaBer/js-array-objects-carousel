@@ -44,7 +44,7 @@ const images = [
     }
 ];
 
-//setto la variabile activeFilm su 0, incrementerà all'eventListener
+//setto la variabile activegame su 0, incrementerà all'eventListener
 let activeGame = 0;
 
 //seleziono il container delle img dalla DOM
@@ -81,24 +81,30 @@ function createCarousel(array, DOMel) {
         //lo appendo ad un elemento della dom
         DOMel.innerHTML += markup;
     }) 
+    
+    
 }
 
+//autoplay ?
+setInterval(changeGame, 3000);
+changeGame(nextBtn);
 
 //assegno un eventListener a ciascuno dei due bottoni
 prevBtn.addEventListener('click', function() {
-    //al click cambia film prendendo il precedente
+    //al click cambia gioco prendendo il precedente
     changeGame(this);
 });
 
 nextBtn.addEventListener('click', function() {
-    //al click cambia film prendendo il successivo
+    //al click cambia game prendendo il successivo
     changeGame(this)
 })
 
 
+
 /**
- * Funzione per cambiare il film con i btn
- * @param {Element} button in base al bottone si skippa al film precedente o successivo
+ * Funzione per cambiare il game con i btn
+ * @param {Element} button in base al bottone si skippa al game precedente o successivo
  */
 function changeGame(button) {
     const allGames = document.querySelectorAll('.img_container > .game');
@@ -123,4 +129,3 @@ function changeGame(button) {
 
     changedGame.classList.add('active');
 }
-
