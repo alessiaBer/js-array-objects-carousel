@@ -43,10 +43,8 @@ const images = [
         text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
     }
 ];
-/* 
-Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
-Al click dell'utente sulle frecce verso sinistra o destra, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo. */
-//
+
+//setto la variabile activeFilm su 0, incrementerà all'eventListener
 let activeFilm = 0;
 
 //seleziono il container delle img dalla DOM
@@ -54,9 +52,7 @@ const imgContainer = document.querySelector('.img_container');
 
 //seleziono i btn prev e next dalla DOM
 const prevBtn = document.querySelector('.prev');
-console.log(prevBtn)
 const nextBtn = document.querySelector('.next');
-console.log(nextBtn);
 
 //invoco la funzione per creare il carousel
 createCarousel(images, imgContainer);
@@ -87,65 +83,44 @@ function createCarousel(array, DOMel) {
     }) 
 }
 
-/* prevBtn.addEventListener('click', function () {
 
-}) */
+//assegno un eventListener a ciascuno dei due bottoni
+prevBtn.addEventListener('click', function() {
+    //al click cambia film prendendo il precedente
+    changeFilm(this);
+});
 
-function prevFilm() {
+nextBtn.addEventListener('click', function() {
+    //al click cambia film prendendo il successivo
+    changeFilm(this)
+})
+
+
+/**
+ * Funzione per cambiare il film con i btn
+ * @param {Element} button in base al bottone si skippa al film precedente o successivo
+ */
+function changeFilm(button) {
     const allFilms = document.querySelectorAll('.img_container > .film');
     const currentFilm = allFilms[activeFilm];
-    console.log(currentFilm);
 
     currentFilm.classList.remove('active');
 
-    activeFilm--;
+    if (button.className == 'next') {
+        activeFilm++;
+    } else if (button.className == 'prev') {
+        activeFilm--;
+    }
+    //
 
-    if (activeFilm < 0) {
+    if (activeFilm > images.length - 1) {
+        activeFilm =  0;
+    } else if (activeFilm < 0 ) {
         activeFilm = images.length - 1;
     }
 
-    const prevFilm = allFilms[activeFilm];
-    console.log(prevFilm)
-    prevFilm.classList.add('active');
+    const changedFilm = allFilms[activeFilm];
+
+    changedFilm.classList.add('active');
 }
 
-
-prevBtn.addEventListener('click', prevFilm());
-
-function nextFilm() {
-    const allFilms = document.querySelectorAll('.img_container > .film');
-    const currentFilm = allFilms[activeFilm];
-    console.log(currentFilm);
-
-    currentFilm.classList.remove('active');
-
-    activeFilm++;
-
-    if (activeFilm > images.length - 1) {
-        activeFilm =  0;
-    }
-
-    const nextFilm = allFilms[activeFilm];
-    console.log(nextFilm);
-
-    nextFilm.classList.add('active');
-}
-
-nextBtn.addEventListener('click', function() {
-    const allFilms = document.querySelectorAll('.img_container > .film');
-    const currentFilm = allFilms[activeFilm];
-    console.log(currentFilm);
-
-    currentFilm.classList.remove('active');
-
-    activeFilm++;
-
-    if (activeFilm > images.length - 1) {
-        activeFilm =  0;
-    }
-
-    const nextFilm = allFilms[activeFilm];
-    console.log(nextFilm);
-
-    nextFilm.classList.add('active');
-})
