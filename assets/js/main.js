@@ -50,14 +50,16 @@ let activeGame = 0;
 //seleziono il container delle img dalla DOM
 const imgContainer = document.querySelector('.img_container');
 
+const thumb_container = document.querySelector('.thumbnails_container')
+
 //seleziono i btn prev e next dalla DOM
 const prevBtn = document.querySelector('.prev');
 const nextBtn = document.querySelector('.next');
 
+
+
 //invoco la funzione per creare il carousel
 createCarousel(images, imgContainer);
-
-
 
 //attraverso una funzione popolo dinamicamente il carosello
 /**
@@ -81,13 +83,26 @@ function createCarousel(array, DOMel) {
         //lo appendo ad un elemento della dom
         DOMel.innerHTML += markup;
     }) 
-    
-    
 }
 
+
+function createThumbnails(array, DOMel) {
+    array.forEach((element, index) => {
+        const markup = `
+        <img src="./assets/${element.image}" class="img ${index === activeGame ? 'active' : ''}">
+        `
+
+        DOMel.innerHTML += markup;
+    })
+}
+
+createThumbnails(images, thumb_container);
+
 //autoplay ?
+/* 
 setInterval(changeGame, 3000);
-changeGame(nextBtn);
+changeGame(nextBtn); */
+
 
 //assegno un eventListener a ciascuno dei due bottoni
 prevBtn.addEventListener('click', function() {
@@ -99,8 +114,6 @@ nextBtn.addEventListener('click', function() {
     //al click cambia game prendendo il successivo
     changeGame(this)
 })
-
-
 
 /**
  * Funzione per cambiare il game con i btn
@@ -129,3 +142,4 @@ function changeGame(button) {
 
     changedGame.classList.add('active');
 }
+
