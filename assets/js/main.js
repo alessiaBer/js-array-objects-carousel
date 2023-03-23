@@ -79,18 +79,23 @@ function createCarousel(array, DOMel) {
                 <span class="game_caption">${element.text}</span>
             </div>
         </div>
-        `
+        `;
+
         //lo appendo ad un elemento della dom
         DOMel.innerHTML += markup;
     }) 
+
+    setInterval(autoplay, 3000);
+
+    
 }
 
 
 function createThumbnails(array, DOMel) {
     array.forEach((element, index) => {
         const markup = `
-        <img src="./assets/${element.image}" class="img ${index === activeGame ? 'active' : ''}">
-        `
+        <img src="./assets/${element.image}" class="game ${index === activeGame ? 'active' : ''}">
+        `;
 
         DOMel.innerHTML += markup;
     })
@@ -99,9 +104,23 @@ function createThumbnails(array, DOMel) {
 createThumbnails(images, thumb_container);
 
 //autoplay ?
-/* 
-setInterval(changeGame, 3000);
-changeGame(nextBtn); */
+function autoplay() {
+    const allGames = document.querySelectorAll('.game');
+    const currentGame = allGames[activeGame];
+
+    currentGame.classList.remove('active');
+
+        activeGame++;
+
+    if (activeGame > images.length - 1) {
+        activeGame =  0;
+    }
+
+    const changedGame = allGames[activeGame];
+
+    changedGame.classList.add('active');
+}
+
 
 
 //assegno un eventListener a ciascuno dei due bottoni
@@ -112,15 +131,16 @@ prevBtn.addEventListener('click', function() {
 
 nextBtn.addEventListener('click', function() {
     //al click cambia game prendendo il successivo
-    changeGame(this)
+    changeGame(this);
 })
+
 
 /**
  * Funzione per cambiare il game con i btn
  * @param {Element} button in base al bottone si skippa al game precedente o successivo
  */
 function changeGame(button) {
-    const allGames = document.querySelectorAll('.img_container > .game');
+    const allGames = document.querySelectorAll('.game');
     const currentGame = allGames[activeGame];
 
     currentGame.classList.remove('active');
@@ -142,4 +162,3 @@ function changeGame(button) {
 
     changedGame.classList.add('active');
 }
-
