@@ -46,12 +46,22 @@ const images = [
 /* 
 Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
 Al click dell'utente sulle frecce verso sinistra o destra, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo. */
+//
+let activeFilm = 0;
 
 //seleziono il container delle img dalla DOM
 const imgContainer = document.querySelector('.img_container');
 
+//seleziono i btn prev e next dalla DOM
+const prevBtn = document.querySelector('.prev');
+console.log(prevBtn)
+const nextBtn = document.querySelector('.next');
+console.log(nextBtn);
+
 //invoco la funzione per creare il carousel
 createCarousel(images, imgContainer);
+
+
 
 //attraverso una funzione popolo dinamicamente il carosello
 /**
@@ -61,18 +71,81 @@ createCarousel(images, imgContainer);
  */
 function createCarousel(array, DOMel) {
     //ciclo dentro l'array di oggetti e per ognuno
-    array.forEach((element) => {
+    array.forEach((element, index) => {
         //creo un markup
         const markup = `
-        <img src="./assets/${element.image}" alt="film">
-        <div class="img_text_container">
-            <h4 class="film_title">${element.title}</h4>
-            <span class="film_caption">${element.text}</span>
+        <div class="film ${index === activeFilm ? 'active' : ''}">
+            <img src="./assets/${element.image}" alt="film">
+            <div class="img_text_container">
+                <h4 class="film_title">${element.title}</h4>
+                <span class="film_caption">${element.text}</span>
+            </div>
         </div>
         `
-    //lo appendo ad un elemento della dom
-    DOMel.innerHTML += markup;
-}) 
+        //lo appendo ad un elemento della dom
+        DOMel.innerHTML += markup;
+    }) 
+}
+
+/* prevBtn.addEventListener('click', function () {
+
+}) */
+
+function prevFilm() {
+    const allFilms = document.querySelectorAll('.img_container > .film');
+    const currentFilm = allFilms[activeFilm];
+    console.log(currentFilm);
+
+    currentFilm.classList.remove('active');
+
+    activeFilm--;
+
+    if (activeFilm < 0) {
+        activeFilm = images.length - 1;
+    }
+
+    const prevFilm = allFilms[activeFilm];
+    console.log(prevFilm)
+    prevFilm.classList.add('active');
 }
 
 
+prevBtn.addEventListener('click', prevFilm());
+
+function nextFilm() {
+    const allFilms = document.querySelectorAll('.img_container > .film');
+    const currentFilm = allFilms[activeFilm];
+    console.log(currentFilm);
+
+    currentFilm.classList.remove('active');
+
+    activeFilm++;
+
+    if (activeFilm > images.length - 1) {
+        activeFilm =  0;
+    }
+
+    const nextFilm = allFilms[activeFilm];
+    console.log(nextFilm);
+
+    nextFilm.classList.add('active');
+}
+
+nextBtn.addEventListener('click', function() {
+    const allFilms = document.querySelectorAll('.img_container > .film');
+    const currentFilm = allFilms[activeFilm];
+    console.log(currentFilm);
+
+    currentFilm.classList.remove('active');
+
+    activeFilm++;
+
+    if (activeFilm > images.length - 1) {
+        activeFilm =  0;
+    }
+
+    const nextFilm = allFilms[activeFilm];
+    console.log(nextFilm);
+
+    nextFilm.classList.add('active');
+})
