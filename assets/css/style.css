@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: black;
 }
 
 .container {
@@ -15,7 +16,6 @@ body {
 
 .carousel_container {
     position: relative;
-    background-color: black;
 }
 
 .img_container {
@@ -88,6 +88,7 @@ button i {
     z-index: 999;
     height: 550px;
     width: 200px;
+    background-color: black;
 }
 
 .thumbnails_container img {
@@ -100,5 +101,10 @@ button i {
 }
 
 img.game:not(.active) {
-    filter: blur(10%);
+    filter: opacity(50%);
+}
+
+.play_controls {
+    display: flex;
+    justify-content: center;
 }

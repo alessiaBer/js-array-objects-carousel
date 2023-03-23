@@ -60,6 +60,8 @@ const nextBtn = document.querySelector('.next');
 
 //invoco la funzione per creare il carousel
 createCarousel(images, imgContainer);
+//invoco la funzione per creare le thumbnails
+createThumbnails(images, thumb_container);
 
 //attraverso una funzione popolo dinamicamente il carosello
 /**
@@ -84,12 +86,7 @@ function createCarousel(array, DOMel) {
         //lo appendo ad un elemento della dom
         DOMel.innerHTML += markup;
     }) 
-
-    setInterval(autoplay, 3000);
-
-    
 }
-
 
 function createThumbnails(array, DOMel) {
     array.forEach((element, index) => {
@@ -101,16 +98,23 @@ function createThumbnails(array, DOMel) {
     })
 }
 
-createThumbnails(images, thumb_container);
+setInterval(autoplay, 3000);
 
-//autoplay ?
+const stop = setInterval(autoplay, 3000);
+
+
+
+
+/**
+ * funzione per generare un autoplay
+ */
 function autoplay() {
     const allGames = document.querySelectorAll('.game');
     const currentGame = allGames[activeGame];
 
     currentGame.classList.remove('active');
 
-        activeGame++;
+    activeGame++;
 
     if (activeGame > images.length - 1) {
         activeGame =  0;
