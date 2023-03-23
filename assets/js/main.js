@@ -43,3 +43,36 @@ const images = [
         text: 'Marvel\'s Avengers is an epic, third-person, action-adventure game that combines an original, cinematic story with single-player and co-operative gameplay.',
     }
 ];
+/* 
+Ora rimuoviamo i contenuti statici e usiamo l’array di oggetti letterali per popolare dinamicamente il carosello.
+Al click dell'utente sulle frecce verso sinistra o destra, l'immagine attiva diventerà visibile e dovremo aggiungervi titolo e testo. */
+
+//seleziono il container delle img dalla DOM
+const imgContainer = document.querySelector('.img_container');
+
+//invoco la funzione per creare il carousel
+createCarousel(images, imgContainer);
+
+//attraverso una funzione popolo dinamicamente il carosello
+/**
+ * funzione per ciclare nell'array e stampare il carosello in pagina
+ * @param {array} array array di oggetti
+ * @param {element} DOMel elemento della DOM a cui appendere il markup
+ */
+function createCarousel(array, DOMel) {
+    //ciclo dentro l'array di oggetti e per ognuno
+    array.forEach((element) => {
+        //creo un markup
+        const markup = `
+        <img src="./assets/${element.image}" alt="film">
+        <div class="img_text_container">
+            <h4 class="film_title">${element.title}</h4>
+            <span class="film_caption">${element.text}</span>
+        </div>
+        `
+    //lo appendo ad un elemento della dom
+    DOMel.innerHTML += markup;
+}) 
+}
+
+
