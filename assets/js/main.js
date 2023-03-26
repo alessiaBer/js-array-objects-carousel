@@ -57,7 +57,9 @@ const prevBtn = document.querySelector('.prev');
 const nextBtn = document.querySelector('.next');
 
 
-
+const stopBtn = document.querySelector('.stop');
+const playBtn = document.querySelector('.play');
+const backBtn = document.querySelector('.backward');
 //invoco la funzione per creare il carousel
 createCarousel(images, imgContainer);
 //invoco la funzione per creare le thumbnails
@@ -91,16 +93,52 @@ function createCarousel(array, DOMel) {
 function createThumbnails(array, DOMel) {
     array.forEach((element, index) => {
         const markup = `
-        <img src="./assets/${element.image}" class="game ${index === activeGame ? 'active' : ''}">
+        <img src="./assets/${element.image}" class="thumb ${index === activeGame ? 'active' : ''}">
         `;
 
         DOMel.innerHTML += markup;
     })
 }
 
-setInterval(autoplay, 3000);
+/* setInterval(autoplay, 3000); */
 
-const stop = setInterval(autoplay, 3000);
+const autoplay = setInterval(changeSlideAuto, 3000);
+
+stopBtn.addEventListener('click', function() {
+    clearInterval(autoplay);
+})
+
+playBtn.addEventListener('click', function() {
+    setInterval(changeSlideAuto, 3000);
+})
+
+backBtn.addEventListener('click', function() {
+    clearInterval(autoplay);
+    setInterval(function () {
+
+        const allGames = document.querySelectorAll('.game');
+        const allThumbs = document.querySelectorAll('.thumb');
+    
+        const currentGame = allGames[activeGame];
+        const currentTHumb = allThumbs[activeGame];
+
+        currentGame.classList.remove('active');
+        currentTHumb.classList.remove('active')
+
+        activeGame--;
+
+        if (activeGame < 0) {
+            activeGame = images.length - 1;
+        }
+
+        const changedGame = allGames[activeGame];
+        const changedThumb = allThumbs[activeGame];
+
+        changedGame.classList.add('active');
+        changedThumb.classList.add('active');
+    }, 3000)
+})
+    
 
 
 
@@ -108,11 +146,15 @@ const stop = setInterval(autoplay, 3000);
 /**
  * funzione per generare un autoplay
  */
-function autoplay() {
+function changeSlideAuto() {
     const allGames = document.querySelectorAll('.game');
+    const allThumbs = document.querySelectorAll('.thumb');
+    
     const currentGame = allGames[activeGame];
+    const currentTHumb = allThumbs[activeGame];
 
     currentGame.classList.remove('active');
+    currentTHumb.classList.remove('active')
 
     activeGame++;
 
@@ -121,8 +163,10 @@ function autoplay() {
     }
 
     const changedGame = allGames[activeGame];
+    const changedThumb = allThumbs[activeGame];
 
     changedGame.classList.add('active');
+    changedThumb.classList.add('active');
 }
 
 
@@ -145,9 +189,13 @@ nextBtn.addEventListener('click', function() {
  */
 function changeGame(button) {
     const allGames = document.querySelectorAll('.game');
+    const allThumbs = document.querySelectorAll('.thumb');
+
     const currentGame = allGames[activeGame];
+    const currentTHumb = allThumbs[activeGame];
 
     currentGame.classList.remove('active');
+    currentTHumb.classList.remove('active');
 
     if (button.className == 'next') {
         activeGame++;
@@ -163,6 +211,8 @@ function changeGame(button) {
     }
 
     const changedGame = allGames[activeGame];
+    const changedThumb = allThumbs[activeGame];
 
     changedGame.classList.add('active');
+    changedThumb.classList.add('active');
 }

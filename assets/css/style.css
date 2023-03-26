@@ -100,7 +100,7 @@ button i {
     border: 3px solid white;
 }
 
-img.game:not(.active) {
+img.thumb:not(.active) {
     filter: opacity(50%);
 }
 
